@@ -1,18 +1,20 @@
-const express = require('express')
-const app = express()
-require('dotenv').config()
+import * as dotenv from 'dotenv'
+import axios from 'axios'
 
-// Modules
-const books = require('./book')
+dotenv.config()
 
-app
-  .get('/', (req, res) => {
-    res.send('Welcome to the LOTR Eduardo SDK')
-  })
-  .get('/books', (req, res) => books.getAllBooks(req, res))
-  .all('*', (req, res) => {
-    res.status('404').send('Route not found or incorrect HTTP method, please check and try again')
-  })
-  .listen(3000, () => {
-    console.log('Server started in port 3000')
-  })
+export default class Lotr {
+  constructor (key) {
+    let axiosHeaders = {}
+    if (key) {
+      axiosHeaders = {
+        Authorization: 'Bearer ' + key
+      }
+    }
+
+    this.get = axios.create({
+      baseURL: process.env.API_BASE,
+      headers: axiosHeaders
+    })
+  }
+}
