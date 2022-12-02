@@ -1,5 +1,5 @@
-import Lotr from '../index'
-const LOTR = Lotr('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
+import { get } from '../index'
+const LOTR = get('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
 
 LOTR.get('movie')
   .then((res: any) => {

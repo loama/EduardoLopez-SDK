@@ -1,7 +1,6 @@
-const Lotr = require('../index.ts')
+const lotr = require('../index.ts')
 
-console.log(Lotr)
-const LOTR = Lotr('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
+const LOTR = lotr.get('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
 
 LOTR('movie')
   .then((res: any) => {

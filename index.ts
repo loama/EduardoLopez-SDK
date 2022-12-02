@@ -3,7 +3,7 @@ import axios from 'axios'
 
 dotenv.config()
 
-export default function Lotr(key: String) {
+export function get(key: String) {
   let axiosHeaders = {}
   if (key) {
     axiosHeaders = {
@@ -19,4 +19,4 @@ export default function Lotr(key: String) {
   return instance
 }
 
-module.exports = Lotr
+module.exports = { get }
