@@ -42,6 +42,7 @@ function createAxiosInstance (key: String) {
 interface LOTR {
   setup: Function;
   get: Function;
+  graphQL: Function;
 }
 
 const LOTR = { 
@@ -51,7 +52,12 @@ const LOTR = {
   get: async function (path: String) {
     const resp = await API_Instance.get(path)
     return resp.data
+  },
+  graphQL: async function () {
+    const movie = await API_Instance.get('movie').data
+    return movie
   }
 }
 
 export default LOTR
+module.exports = LOTR
