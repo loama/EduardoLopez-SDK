@@ -1,10 +1,10 @@
-const lotr = require('../index.ts')
+const LOTR = require('../index.ts')
 
-const LOTR = lotr.REST('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
+LOTR.setup('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
 
 LOTR.get('book')
   .then((res: any) => {
-    console.log(res.data)
+    console.log(res)
   })
   .catch((e: any) => {
     console.log(e.response.data)

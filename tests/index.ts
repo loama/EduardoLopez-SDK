@@ -1,10 +1,10 @@
-import { REST } from '../index'
+import LOTR from '../index'
 
-const LOTR_REST = REST('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
+LOTR.setup('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
 
-LOTR_REST.get('book')
+LOTR.get('book')
   .then((res: any) => {
-    console.log(res.data)
+    console.log(res)
   })
   .catch((e: any) => {
     console.log(e.response.data)
