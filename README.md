@@ -1,6 +1,6 @@
 # Lord Of The Rings JS Library
 
-The Lord Of The Rings (LOTR) JS Library provides convenient access to the [LOTR API](https://the-one-api.dev/) from applications written in Javascript, both server and client side.
+The Lord Of The Rings (LOTR) JS Library provides convenient access to the [LOTR API](https://the-one-api.dev/) from applications written in Javascript (or typescript), both server and client side.
 
 ## Installation
 
@@ -13,7 +13,8 @@ npm i @loama18/eduardolopez-sdk
 ## Usage
 
 The package needs to be configured with your account's secret key, which is available in the [LOTR API Account Page](https://the-one-api.dev/account), sign up for free if you haven't already, to get an API Key.
-Otherwise you will only be able to access the book endpoints.
+Otherwise you will only be able to access the `book` endpoints.
+&nbsp;
 
 ---
 
@@ -52,7 +53,7 @@ LOTR.setup("<your-key>"); // replace <your-key> for the key you got
 })();
 ```
 
-> depending on your environment, you might need to replace `LOTR.setup` for `LOTR.default.setup`
+> depending on your environment, you might need to replace `LOTR.setup` with `LOTR.default.setup`
 
 &nbsp;
 
@@ -99,7 +100,11 @@ LOTR.graphQL(
   `{
   book {
     _id,
-    name
+    name,
+    chapter {
+      _id,
+      chapterName
+    }
   },
   chapter {
     _id,
@@ -194,8 +199,8 @@ npm run test
 
 ## Pending To Do for next release:
 
-- Make `character/quotes` available directly
-- Add ability to paginate, slice and filter with graphQL like:
+- Make `character/quotes` available directly in GraphQL
+- Add ability to paginate, slice and filter with GraphQL like:
 
   ```javascript
     movies(first:2) {
