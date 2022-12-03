@@ -169,6 +169,16 @@ If you are running it from the Browser (most likely with something like Vue or R
 
 &nbsp;
 
+## Test
+
+Run
+
+```
+npm run test
+```
+
+&nbsp;
+
 ## Pending To Do for next release:
 
 - Make `book/quotes` available directly

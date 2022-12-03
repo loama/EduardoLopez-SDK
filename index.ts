@@ -4,9 +4,11 @@ import cachios from 'cachios'
 import { setupCache } from 'axios-cache-adapter'
 import graphqlHandler from './graphql'
 
-let API_Instance: any
+let API_Instance = axios.create({
+  baseURL: 'https://the-one-api.dev/v2/'
+})
 
-function createAxiosInstance (key: String) {
+function updateAxiosInstance (key: String) {
   let axiosHeaders = {}
   if (key) {
     axiosHeaders = {
@@ -48,9 +50,9 @@ interface LOTR {
 
 const LOTR = { 
   setup: function (key: String) {
-    return createAxiosInstance(key)
+    return updateAxiosInstance(key)
   },
-  get: async function (path: String) {
+  get: async function (path: string) {
     const resp = await API_Instance.get(path)
     return resp.data
   },
