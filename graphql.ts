@@ -95,10 +95,36 @@ const schema = buildSchema(`
     book: String!
   }
 
+  type Character {
+    _id: ID!
+    height: String!
+    race: String!
+    gender: String
+    birth: String!
+    spouse: String!
+    death: String!
+    realm: String!
+    hair: String!
+    name: String!
+    wikiUrl: String
+  }
+
   type Book {
     _id: ID!
     name: String!
     chapter: Chapter
+  }
+
+  type Movie {
+    _id: ID!
+    name: String!
+    runtimeInMinutes: Float
+    budgetInMillions: Float
+    boxOfficeRevenueInMillions: Float
+    academyAwardNominations: Float
+    academyAwardWins: Float
+    rottenTomatoesScore: Float,
+    quote: [Quote]
   }
 
   type Quote {
@@ -115,31 +141,5 @@ const schema = buildSchema(`
     character: [Character]
     movie: [Movie],
     quote: [Quote]
-  }
-
-  type Movie {
-    _id: ID!
-    name: String!
-    runtimeInMinutes: Float
-    budgetInMillions: Float
-    boxOfficeRevenueInMillions: Float
-    academyAwardNominations: Float
-    academyAwardWins: Float
-    rottenTomatoesScore: Float,
-    quote: [Quote]
-  }
-
-  type Character {
-    _id: ID!
-    height: String!
-    race: String!
-    gender: String!
-    birth: String!
-    spouse: String!
-    death: String!
-    realm: String!
-    hair: String!
-    name: String!
-    wikiUrl: String!
   }
 `)
