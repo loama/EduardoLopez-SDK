@@ -155,7 +155,20 @@ LOTR.graphQL(
 
 This is an extreme case, feel free to remove whatever fields that you don't require, to make the request faster and smaller.
 
-Note that from within `movie` you are able to request the `quotes` that belong to that movie.
+Note that from within `movie` you are able to request the `quotes` that belong to that movie, same thing for `books`, you are able to request their belonging `chapters`.
+
+```javascript
+LOTR.graphQL(`{
+  book {
+    _id,
+    name,
+    chapter {
+      _id,
+      chapterName
+    }
+  }
+}`);
+```
 
 &nbsp;
 
@@ -181,8 +194,7 @@ npm run test
 
 ## Pending To Do for next release:
 
-- Make `book/quotes` available directly
-- Make `character/quoutes` available directly
+- Make `character/quotes` available directly
 - Add ability to paginate, slice and filter with graphQL like:
 
   ```javascript

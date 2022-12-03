@@ -2,23 +2,24 @@ import { graphql, buildSchema } from 'graphql'
 
 async function getDataFromEndpoint (API_Instance: any, endpoint: string) {
   const res = await API_Instance.get(endpoint)
-  rootValue[endpoint as keyof allData] = res.data.docs
+  rootValue[endpoint as keyof rootValue] = res.data.docs
 }
 
-type allData = {
-  book: Array<Object>,
-  character: Array<Object>,
-  chapter: Array<Object>,
-  quote: Array<Object>,
+interface rootValue {
+  book: Array<{_id: string, chapter: Array<Object>}>
+  character: Array<Object>
+  chapter: Array<Object>
   movie: Array<Object>
+  quote: Array<Object>
 }
 
 const rootValue = {
   book: [
     {
-      "_id": "5cf5805fb53e011a64671582",
-      "name": "The Fellowship Of The Ring",
-      "chapter": []
+      "_id": '',
+      "chapter": [{
+        "book": ''
+      }]
     }
   ],
   character:  [],
@@ -52,33 +53,37 @@ export default async function graphqlHandler (API_Instance: any, query: any) {
     }
   }
 
-  // organize quotes into their movie
-  for (let i = 0; i < rootValue.quote.length; i++) {
-    const quote = rootValue.quote[i]
-    const moviesFiltered = rootValue.movie.filter(movie => movie._id === quote['movie'])[0]
-    const movieMatchingIndex = rootValue.movie.indexOf(moviesFiltered)
-    const movieMatch = rootValue.movie[movieMatchingIndex]
-    
-    if (movieMatch['quote'] == undefined) {
-      movieMatch['quote'] = []
+  if (query.includes('movie')) {
+    // organize quotes into their movie
+    for (let i = 0; i < rootValue.quote.length; i++) {
+      const quote = rootValue.quote[i]
+      const moviesFiltered = rootValue.movie.filter(movie => movie._id === quote['movie'])[0]
+      const movieMatchingIndex = rootValue.movie.indexOf(moviesFiltered)
+      const movieMatch = rootValue.movie[movieMatchingIndex]
+      
+      if (movieMatch['quote'] == undefined) {
+        movieMatch['quote'] = []
+      }
+      movieMatch['quote'].push(quote)
     }
-    movieMatch['quote'].push(quote)
   }
 
-  // organize chapters into their book
-  /*
-  for (let j = 0; j < rootValue.book.length; j++) {
-    const chapter = rootValue.book[j]
-    const booksFiltered = rootValue.book.filter(book => book._id === chapter['book'])[0]
-    const bookMatchingIndex = rootValue.book.indexOf(booksFiltered)
-    const bookMatch = rootValue.book[bookMatchingIndex]
-    
-    if (bookMatch['chapter'] == undefined) {
-      bookMatch['chapter'] = []
+  if (query.includes('book')) {
+    // organize chapters into their book
+    for (let j = 0; j < rootValue.chapter.length; j++) {
+      const chapter = JSON.parse(JSON.stringify(rootValue.chapter[j]))
+      const booksFiltered = rootValue.book.filter(book => book._id === chapter['book'])[0]
+      const bookMatchingIndex = rootValue.book.indexOf(booksFiltered)
+      const bookMatch = rootValue.book[bookMatchingIndex]
+      
+      if (bookMatch['chapter'] == undefined) {
+        bookMatch['chapter'] = []
+      }
+
+      delete chapter.book
+      bookMatch['chapter'].push(chapter)
     }
-    bookMatch['chapter'].push(chapter)
   }
-  */
   
   return graphql({
     schema,
@@ -90,7 +95,7 @@ export default async function graphqlHandler (API_Instance: any, query: any) {
 // Schema
 const schema = buildSchema(`
   type Chapter {
-    _id: ID!
+    _id: ID
     chapterName: String!
     book: String!
   }
@@ -112,7 +117,12 @@ const schema = buildSchema(`
   type Book {
     _id: ID!
     name: String!
-    chapter: Chapter
+    chapter: [ChapterOfBook]
+  }
+
+  type ChapterOfBook {
+    _id: ID,
+    chapterName: String
   }
 
   type Movie {
