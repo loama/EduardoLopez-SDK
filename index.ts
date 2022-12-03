@@ -55,7 +55,7 @@ const LOTR = {
     return resp.data
   },
   graphQL: async function (query: String) {
-    graphqlHandler(API_Instance, query)
+    return graphqlHandler(API_Instance, query)
   }
 }
 

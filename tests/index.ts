@@ -9,18 +9,13 @@ LOTR.setup('bI8jJSvOyGeTzadmKGDF') // key bI8jJSvOyGeTzadmKGDF
   .catch((e: any) => {
     console.log(e.response.data)
   }) */
-
 LOTR.graphQL(`
-{
-  movie {
-    *,
-    quote {
-      dialog
+  {
+    book {
+      _id
     }
-  },
-  character {
-    *
-  },
-  quote
-}
+  }
 `)
+  .then((res) => {
+    console.log(JSON.stringify(res.data))
+  })
