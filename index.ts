@@ -2,6 +2,7 @@ import axios from 'axios'
 import { isBrowser } from 'browser-or-node'
 import cachios from 'cachios'
 import { setupCache } from 'axios-cache-adapter'
+import graphqlHandler from './graphql'
 
 let API_Instance: any
 
@@ -53,9 +54,8 @@ const LOTR = {
     const resp = await API_Instance.get(path)
     return resp.data
   },
-  graphQL: async function () {
-    const movie = await API_Instance.get('movie').data
-    return movie
+  graphQL: async function (query: String) {
+    graphqlHandler(API_Instance, query)
   }
 }
 
